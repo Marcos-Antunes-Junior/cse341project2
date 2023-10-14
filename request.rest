@@ -1,0 +1,18 @@
+POST http://localhost:3000/employees HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Anna",
+    "lastName": "Antunes",
+    "email": "anna@antunes.com",
+    "phoneNumber": "123-456-7890",
+    "birthday": "08/27/1998",
+    "jobPosition": "frontend developer",
+    "salary": "6000"
+}
+
+###
+GET http://localhost:3000/employees
+
+###
+GET http://localhost:3000/employees/652a9603015105cc289705d7
