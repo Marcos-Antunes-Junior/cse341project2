@@ -15,4 +15,24 @@ Content-Type: application/json
 GET http://localhost:3000/employees
 
 ###
-GET http://localhost:3000/employees/652a9603015105cc289705d7
+GET http://localhost:3000/employees/652a9b1a605914763cc7565d
+
+###
+GET https://cse341project2-bkgg.onrender.com/employees
+
+###
+GET https://cse341project2-bkgg.onrender.com/employees/652a9b1a605914763cc7565d
+
+###
+POST https://cse341project2-bkgg.onrender.com/employees HTTP/1.1
+Content-Type: application/json
+
+{
+    "firstName": "Rafael",
+    "lastName": "Antunes",
+    "email": "rafael@antunes.com",
+    "phoneNumber": "123-123-7890",
+    "birthday": "05/27/2000",
+    "jobPosition": "frontend developer",
+    "salary": "5000"
+}
