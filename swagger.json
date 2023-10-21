@@ -5,25 +5,25 @@
     "description": "Employees list API",
     "version": "1.0.0"
   },
-  "host": "cse341project2-bkgg.onrender.com",
+  "host": "localhost:3000",
   "basePath": "/",
   "schemes": [
-    "https"
+    "http"
   ],
   "paths": {
     "/": {
       "get": {
         "description": "",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": ""
           }
         }
       }
     },
     "/api-docs": {
       "get": {
-        "description": "Get API documentation",
+        "description": "",
         "responses": {
           "default": {
             "description": ""
@@ -33,18 +33,21 @@
     },
     "/employees/": {
       "get": {
-        "description": "Get employees list",
+        "description": "",
         "produces": [
           "application/json"
         ],
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           }
         }
       },
       "post": {
-        "description": "Create new employee data",
+        "description": "",
         "parameters": [
           {
             "name": "body",
@@ -52,7 +55,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "firstName": {
+                "fisrtName": {
                   "example": "any"
                 },
                 "lastName": {
@@ -72,12 +75,18 @@
                 },
                 "salary": {
                   "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
                 }
               }
             }
           }
         ],
         "responses": {
+          "200": {
+            "description": "OK"
+          },
           "201": {
             "description": "Created"
           },
@@ -89,7 +98,7 @@
     },
     "/employees/{id}": {
       "get": {
-        "description": "Get specific employee by id",
+        "description": "",
         "produces": [
           "application/json"
         ],
@@ -104,6 +113,83 @@
         "responses": {
           "200": {
             "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
+          }
+        }
+      },
+      "put": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "fisrtName": {
+                  "example": "any"
+                },
+                "lastName": {
+                  "example": "any"
+                },
+                "email": {
+                  "example": "any"
+                },
+                "phoneNumber": {
+                  "example": "any"
+                },
+                "birthday": {
+                  "example": "any"
+                },
+                "jobPosition": {
+                  "example": "any"
+                },
+                "salary": {
+                  "example": "any"
+                },
+                "firstName": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "description": "",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       }

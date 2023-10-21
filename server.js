@@ -13,6 +13,25 @@ app
   })
   .use('/', require('./routes'));
 
+
+
+  
+// File Not Found Route - must be last route in list
+app.use((req, res, next) => {
+next({status: 404, message: 'Sorry, we appear to have lost that page.'})
+})
+
+
+// Handling Errors
+app.use((err, req, res, next) => {
+  // console.log(err);
+  err.statusCode = err.statusCode || 500;
+  err.message = 'Sorry, something went wrong' || "Internal Server Error";
+  res.status(err.statusCode).json({
+    message: err.message,
+  });
+});
+
 mongodb.initDb((err) => {
   if (err) {
     console.log(err);
