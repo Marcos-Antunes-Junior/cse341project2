@@ -75,9 +75,6 @@
                 },
                 "salary": {
                   "example": "any"
-                },
-                "firstName": {
-                  "example": "any"
                 }
               }
             }
@@ -153,9 +150,6 @@
                   "example": "any"
                 },
                 "salary": {
-                  "example": "any"
-                },
-                "firstName": {
                   "example": "any"
                 }
               }
