@@ -55,7 +55,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "fisrtName": {
+                "firstName": {
                   "example": "any"
                 },
                 "lastName": {
@@ -81,9 +81,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "201": {
             "description": "Created"
           },
@@ -131,7 +128,7 @@
             "schema": {
               "type": "object",
               "properties": {
-                "fisrtName": {
+                "firstName": {
                   "example": "any"
                 },
                 "lastName": {
@@ -157,9 +154,6 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
-          },
           "204": {
             "description": "No Content"
           },

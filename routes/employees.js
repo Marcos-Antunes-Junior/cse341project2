@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const validate = require('../utilities/validation')
-const {params} = require("express-validator")
+
 
 const employeesController = require('../controllers/employees');
 
