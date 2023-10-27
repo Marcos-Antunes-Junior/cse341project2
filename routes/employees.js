@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const validate = require('../utilities/validation')
-
-
 const employeesController = require('../controllers/employees');
 
 router.get('/', validate.handleErrors(employeesController.getAll));

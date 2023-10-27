@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongodb = require('./db/connect');
+const authRoutes = require('./routes/users');
 
 const port = process.env.PORT
 const app = express();
@@ -11,7 +12,8 @@ app
     res.setHeader('Access-Control-Allow-Origin', '*');
     next();
   })
-  .use('/', require('./routes'));
+  .use('/', require('./routes'))
+  .use('/auth', authRoutes);
 
 
 
