@@ -13,7 +13,7 @@
   "paths": {
     "/": {
       "get": {
-        "description": "",
+        "description": "Home",
         "responses": {
           "default": {
             "description": ""
@@ -23,7 +23,7 @@
     },
     "/api-docs": {
       "get": {
-        "description": "",
+        "description": "Route for api documentation",
         "responses": {
           "default": {
             "description": ""
@@ -33,7 +33,7 @@
     },
     "/employees/": {
       "get": {
-        "description": "",
+        "description": "Get all employees data",
         "produces": [
           "application/json"
         ],
@@ -41,13 +41,13 @@
           "200": {
             "description": "OK"
           },
-          "404": {
-            "description": "Not Found"
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
       "post": {
-        "description": "",
+        "description": "Create employee data",
         "parameters": [
           {
             "name": "body",
@@ -92,10 +92,7 @@
     },
     "/employees/{id}": {
       "get": {
-        "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "description": "Get employee data by id",
         "parameters": [
           {
             "name": "id",
@@ -110,11 +107,14 @@
           },
           "404": {
             "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
           }
         }
       },
       "put": {
-        "description": "",
+        "description": "Update employee data by id",
         "parameters": [
           {
             "name": "id",
@@ -154,8 +154,11 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
+          "200": {
+            "description": "OK"
+          },
+          "404": {
+            "description": "Not Found"
           },
           "500": {
             "description": "Internal Server Error"
@@ -163,7 +166,7 @@
         }
       },
       "delete": {
-        "description": "",
+        "description": "Delete employee data by id",
         "parameters": [
           {
             "name": "id",
@@ -178,6 +181,26 @@
           },
           "500": {
             "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/auth/google": {
+      "get": {
+        "description": "Oauth 2.0 Google route",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/auth/google/redirect": {
+      "get": {
+        "description": "Oauth 2.0 Google callback(redirect) route",
+        "responses": {
+          "default": {
+            "description": ""
           }
         }
       }

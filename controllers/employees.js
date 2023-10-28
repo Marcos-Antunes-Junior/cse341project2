@@ -1,33 +1,45 @@
-const mongodb = require('../db/connect');
-const ObjectId = require('mongodb').ObjectId;
+const db = require('../models');
+const Employees = db.employees;
+
+
 
 const getAll = async (req, res) => {
-    const result = await mongodb.getDb().db('project2').collection('employees').find();
-    result.toArray().then((lists) => {
-    if(lists.length === 0){
-    res.status(404).json(result.error || 'No data was found.');
-    } else {
+    Employees.find({})
+    .then((lists) => {
     res.setHeader('Content-Type', 'application/json');
     res.status(200).json(lists);
-    }
-    })    
+    }) 
+    .catch((err) => {
+      res.status(500).send({
+        message:
+          err.message || 'An error occurred while retrieving contacts.',
+      });
+    });   
 };
 
+
 const getSingle = async (req, res) => {
-    const userId = new ObjectId(req.params.id);
-    const result = await mongodb.getDb().db('project2').collection('employees').find({ _id: userId });
-    result.toArray().then((lists) => {
-      if(lists.length === 0){
-      res.status(404).json(result.error || 'No data was found.'); 
+  const _id = req.params.id;
+    Employees.findById({_id})
+    .then((data) => {
+      if (!data) {
+        res
+        .status(404)
+        .send({ message: 'Not contact found with id ' + _id });
       } else {
-      res.setHeader('Content-Type', 'application/json');
-      res.status(200).json(lists[0]);
+        res.status(200).send(data);
       }
+  })
+  .catch((err) => {
+    res.status(500).send({
+      message: 'Error retrieving contact with id ' + _id,
     });
+  });
   };
   
+  
   const createEmployee = async (req, res) => {
-    const employee = {
+    const employee = new Employees({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
@@ -35,18 +47,22 @@ const getSingle = async (req, res) => {
       birthday: req.body.birthday,
       jobPosition: req.body.jobPosition,
       salary: req.body.salary
-    };
-    const response = await mongodb.getDb().db('project2').collection('employees').insertOne(employee);
-    if (response.acknowledged) {
-      res.status(201).json(response);
-    } else {
-      res.status(500).json(response.error || 'Some error occurred while creating the employee.');
-    }
+    });
+    await employee.save()
+    .then((data) => {
+      console.log(data);
+      res.status(201).send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || 'Some error occurred while creating the user.'
+      });
+    });
   };
 
 
   const updateEmployee = async (req, res) => {
-    const userId = new ObjectId(req.params.id);
+    const _id = req.params.id;
     const employee = {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -56,28 +72,31 @@ const getSingle = async (req, res) => {
       jobPosition: req.body.jobPosition,
       salary: req.body.salary
     };
-    const response = await mongodb
-      .getDb()
-      .db('project2')
-      .collection('employees')
-      .replaceOne({ _id: userId }, employee);
-    console.log(response);
-    if (response.modifiedCount > 0) {
-      res.status(204).send();
-    } else {
-      res.status(500).json(response.error || 'Some error occurred while updating the employee.');
+    try{
+    const updatedEmployee = await Employees.findByIdAndUpdate(_id, employee, { new: true});
+    if(!updatedEmployee) {
+      return res.status(404).send({message: 'No employee found with id ' + _id})
+    }
+
+    return res.status(200).json(updatedEmployee);
+    
+    } catch (err) {
+    return res.status(500).send({ message: 'Error updating employee: ' + err.message});
     }
   };
 
+ 
   const deleteEmployee = async (req, res) => {
-    const userId = new ObjectId(req.params.id);
-    const response = await mongodb.getDb().db('project2').collection('employees').deleteOne({ _id: userId}, true)
-    console.log(response)
-    if(response.deletedCount > 0) {
+    const _id = req.params.id;
+    Employees.deleteOne({_id: _id})
+    .then((data) => {
+    if(data.deletedCount > 0) {
     res.status(200).send();
+    console.log(data) 
     } else {
-      res.status(500).json(response.error || 'Some error ocurred while deleting the employee data')
+      res.status(500).json(response.error || 'Some error ocurred while deleting the employee data')  
     }
+    })
   }
 
 

@@ -1,14 +1,14 @@
 POST http://localhost:3000/employees HTTP/1.1
 Content-Type: application/json
 
-{
-    "firstName": "Anna1",
-    "lastName": "Antunes1",
+{  
+    "firstName": "TESTE1",
+    "lastName": "Antunes2",
     "email": "anna@antunes.com",
     "phoneNumber": "123-456-7890",
     "birthday": "08/27/1998",
     "jobPosition": "frontend developer",
-    "salary": "6000"
+    "salary": "9000"
 }
 
 
@@ -17,13 +17,13 @@ PUT http://localhost:3000/employees/652a9b1a605914763cc7565d HTTP/1.1
 Content-Type: application/json
 
 {
-    "firstName": "Anna",
-    "lastName": "Antunes",
-    "email": "anna@antunes.com",
+    "firstName": "TESTE23",
+    "lastName": "Antunes1",
+    "email": "anna@antunes1.com",
     "phoneNumber": "123-456-7890",
     "birthday": "08/27/1998",
     "jobPosition": "frontend developer",
-    "salary": "7000"
+    "salary": "8000"
 }
 
 ###
@@ -31,9 +31,8 @@ GET http://localhost:3000/employees
 
 ###
 GET http://localhost:3000/employees/652a9b1a605914763cc7565d
-
 ###
-DELETE http://localhost:3000/employees/65327c10f41a4e1786a3b804
+DELETE http://localhost:3000/employees/653be7ea93d33478ad62560e
 
 ###
 GET https://cse341project2-bkgg.onrender.com/employees
