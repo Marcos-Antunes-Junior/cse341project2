@@ -7,8 +7,12 @@ const passport = require('passport')
 //login - In progress
 //router.get('/login')
 
-//logout - in progress
-//router.get('/logout')
+//logout 
+router.get('/logout', (req, res) => {
+ req.logout();
+ console.log('Success! User logged out.');
+ res.redirect('/')
+})
 
 
 //Oauth with Google
@@ -18,7 +22,8 @@ router.get('/google', passport.authenticate('google', {
 
 // callback route for Google to redirect to
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-console.log('Success!')
+console.log('Sucess! User logged in.')
+res.redirect('/')
 })
 
 

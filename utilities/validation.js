@@ -54,6 +54,14 @@ validate.checkEmployeeData = async (req, res, next) => {
     next()
 }
 
+validate.authCheck = async (req, res, next) => {
+    if(!req.user){
+    res.send('Sorry, you must first log in before using the system!')
+    } else {
+        next();
+    }
+}
+
 
 
 

@@ -2,9 +2,20 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/users');
 const passportSetup = require('./config/passportSetup')
+const cookieSession = require('cookie-session');
+const passport = require('passport')
 
 const port = process.env.PORT
 const app = express();
+
+app.use(cookieSession({ 
+maxAge: 24 * 60 * 60 * 1000,
+keys: [process.env.COOKIE_KEY]  
+}))
+
+// Initialize passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app
   .use(bodyParser.json())
