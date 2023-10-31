@@ -1,7 +1,7 @@
 module.exports = (mongoose) => {
     const { ObjectId } = mongoose.Schema.Types;
-      const User = mongoose.model(
-        'users',
+      const GoogleUser = mongoose.model(
+        'google_users',
         mongoose.Schema({
           _id: {type: ObjectId, auto: true},
           username: {
@@ -10,8 +10,11 @@ module.exports = (mongoose) => {
           googleId: {
             type: String
           }, 
+          accountType: {
+           type: String
+          },
         })
       );
     
-      return User;
+      return GoogleUser;
     };

@@ -8,7 +8,8 @@ const db = {};
 db.mongoose = mongoose;
 db.url = dbConfig.url;
 db.employees = require('./employees.js')(mongoose);
-db.user = require('./user.js')(mongoose);
+db.googleUser = require('./googleUsers.js')(mongoose);
+db.users = require('./users.js')(mongoose);
 
 
 module.exports = db;

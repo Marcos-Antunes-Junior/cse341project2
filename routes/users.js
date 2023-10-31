@@ -2,10 +2,14 @@ const express = require('express');
 const router = express.Router();
 const validate = require('../utilities/validation');
 const passport = require('passport')
+const usersController = require('../controllers/users');
 
 
-//login - In progress
-//router.get('/login')
+// Login
+//router.post('/login')
+
+//Create Account
+router.post('/create', usersController.createAccount);
 
 //logout 
 router.get('/logout', validate.authCheck, (req, res) => {

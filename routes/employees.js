@@ -7,10 +7,10 @@ router.get('/', validate.authCheck, validate.handleErrors(employeesController.ge
 
 router.get('/:id', validate.authCheck, validate.handleErrors(employeesController.getSingle));
 
-router.post('/', validate.authCheck, validate.employeeDataValidation(), validate.checkEmployeeData, validate.handleErrors(employeesController.createEmployee));
+router.post('/', validate.authCheck, validate.checkPermission, validate.employeeDataValidation(), validate.checkEmployeeData, validate.handleErrors(employeesController.createEmployee));
 
-router.put('/:id', validate.authCheck, validate.employeeDataValidation(), validate.checkEmployeeData, validate.handleErrors(employeesController.updateEmployee));
+router.put('/:id', validate.authCheck, validate.checkPermission, validate.employeeDataValidation(), validate.checkEmployeeData, validate.handleErrors(employeesController.updateEmployee));
 
-router.delete('/:id', validate.authCheck, validate.handleErrors(employeesController.deleteEmployee))
+router.delete('/:id', validate.authCheck, validate.checkPermission, validate.handleErrors(employeesController.deleteEmployee))
 
 module.exports = router;

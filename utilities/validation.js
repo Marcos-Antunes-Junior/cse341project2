@@ -62,6 +62,14 @@ validate.authCheck = async (req, res, next) => {
     }
 }
 
+validate.checkPermission = async (req, res, next) => {
+if(req.user.accountType === 'user'){
+res.send('Not authorized');    
+} else {
+    next();
+}  
+}
+
 
 
 
