@@ -14,9 +14,6 @@ mongoose.Schema({
     password: {
         type: String
     },
-    accountType: {
-        type: String
-    },
 })    
 );
 return Users

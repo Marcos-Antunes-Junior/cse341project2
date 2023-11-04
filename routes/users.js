@@ -6,17 +6,16 @@ const usersController = require('../controllers/users');
 
 
 // Login
-//router.post('/login')
+router.post('/login', usersController.userLogin);
 
 //Create Account
-router.post('/create', usersController.createAccount);
+router.post('/create', validate.registrationRules(), validate.checkRegisterData, usersController.createAccount);
 
 //logout 
-router.get('/logout', validate.authCheck, (req, res) => {
- req.logout();
- console.log('Success! User logged out.');
- res.redirect('/')
-})
+router.get('/logout', validate.authCheck, usersController.userLogout)
+
+//update user account
+router.put('/update/:id', validate.authCheck, validate.updateRules(), validate.checkUpdateData, usersController.updateAccount)
 
 
 //Oauth with Google

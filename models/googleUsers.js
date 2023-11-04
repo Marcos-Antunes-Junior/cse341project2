@@ -10,9 +10,6 @@ module.exports = (mongoose) => {
           googleId: {
             type: String
           }, 
-          accountType: {
-           type: String
-          },
         })
       );
     

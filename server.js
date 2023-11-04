@@ -1,30 +1,46 @@
 const express = require('express');
+const app = express();
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/users');
 const passportSetup = require('./config/passportSetup')
-const cookieSession = require('cookie-session');
-const passport = require('passport')
+const passport = require('passport');
+const cookieParser = require('cookie-parser');
+const utilities = require('./utilities/validation');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
+const db = require('./models');
 
 const port = process.env.PORT
-const app = express();
 
-app.use(cookieSession({ 
-maxAge: 24 * 60 * 60 * 1000,
-keys: [process.env.COOKIE_KEY]  
+
+app.use(session({
+createTableIfMissing: true,
+db,
+secret: process.env.SESSION_SECRET,
+resave: true,
+saveUninitialized: true,
+name: 'sessionId', 
+store: MongoStore.create({
+  mongoUrl: process.env.DATABASE_URI,
+}),
 }))
 
-// Initialize passport
-app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.initialize())
+app.use(passport.session())
 
-app
-  .use(bodyParser.json())
-  .use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    next();
-  })
-  .use('/', require('./routes'))
-  .use('/auth', authRoutes);
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use((req, res, next) => {
+res.setHeader('Access-Control-Allow-Origin', '*');
+next();
+})
+app.use(cookieParser())
+
+
+  
+// Routes
+app.use('/', require('./routes'))
+app.use('/auth', authRoutes);
 
 
 
@@ -45,7 +61,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-const db = require('./models');
+
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
