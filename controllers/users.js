@@ -17,16 +17,24 @@ const createAccount = async (req, res) => {
     email: req.body.email,
     password: hashedPassword,
     })
-    await users.save().then((data) => {
-    console.log(data)
-    res.status(201).send(data);
-    })
-    .catch((err) => {
-    res.status(500).send({
-    message: err.message || 'Some error occurred while creating user.'
-    })
-    })
-}
+    try {
+      const existingUser = await Users.findOne({ email: req.body.email })
+      if(existingUser) {
+        return res.status(400).json({ errors: "Email exists. Please, log in or use a different email" })
+      }
+      await users
+      .save()
+      .then((data) => {
+        return res.status(201).send({ message: 'Account created. Please log in.', data});
+      })
+  
+    }catch (err) {
+        console.log(err);
+        res.status(500).send({
+          message: err.message || "Some error ocurred while creating user.",
+        });
+      };
+  };
 
 const userLogin = async (req, res) => {
 const { email, password } = req.body;

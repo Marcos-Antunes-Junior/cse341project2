@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors')
 const app = express();
 const bodyParser = require('body-parser');
 const authRoutes = require('./routes/users');
@@ -30,10 +31,12 @@ app.use(passport.session())
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
-app.use((req, res, next) => {
-res.setHeader('Access-Control-Allow-Origin', '*');
-next();
-})
+// Use CORS middleware here
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: "GET, POST, PUT, DELETE",
+  credentials: true,
+}));
 app.use(cookieParser())
 
 

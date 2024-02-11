@@ -69,12 +69,9 @@ validate.registrationRules = () => {
     .normalizeEmail()
     .withMessage("A valid email is required."),
 
-    body("account_password")
+    body("password")
+    .isLength({ min: 8})
     .trim()
-    .isStrongPassword({
-        maxLength: 16,
-        minLength: 8,
-    })
     .withMessage("The password must be 8 to 16 characters long"),
     ]
  }
