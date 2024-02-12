@@ -60,7 +60,7 @@ const createAccount = async (req, res) => {
        const { username, _id } = user;
 
       console.log(`User ${ email } logged in!`);
-       return res.status(200).json({ username, id: _id, message: 'Success!' });
+       return res.status(200).json({ token: accessToken, username, id: _id, message: 'Success!' });
       
     } else {
       return res.status(401).json({ message: 'Email or password is not valid.'})
