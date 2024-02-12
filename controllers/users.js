@@ -36,27 +36,42 @@ const createAccount = async (req, res) => {
       };
   };
 
-const userLogin = async (req, res) => {
-const { email, password } = req.body;
-if(!email || !password) {
-res.status(400);
-throw new Error('All fields are mandatory!')   
-}
-const user = await Users.findOne({ email });
-try {
-if(user && (await bcrypt.compare(password, user.password))){
-    delete user.password
-    const accessToken = jwt.sign({user}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
-    res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
-    return res.redirect("/")
-} else {
-res.send("Email or password is not valid");    
-}
-} catch (error) {
-res.status(401)
-throw new Error("Email or password is not valid");
-}
-}
+  const userLogin = async (req, res) => {
+
+    const { email, password } = req.body;
+    if(!email || !password) {
+    return res.status(400).send({ message: 'All fields are mandatory!'})
+    }
+  
+    const user = await Users.findOne({ email });
+    try {
+      if (user && (await bcrypt.compare(password, user.password))) {
+      delete user.password;
+      const accessToken = jwt.sign(
+        { user },
+        process.env.ACCESS_TOKEN_SECRET,
+        { expiresIn: 3600 * 1000}
+      );
+      res.cookie('jwt', accessToken, {
+        httpOnly: true,
+        maxAge: 3600 * 1000,
+      });
+
+       const { username, _id } = user;
+
+      console.log(`User ${ email } logged in!`);
+       return res.status(200).json({ username, id: _id, message: 'Success!' });
+      
+    } else {
+      return res.status(401).json({ message: 'Email or password is not valid.'})
+    }
+    } catch (err) {
+      console.log(err)
+      res.status(401)
+      throw new Error(err);
+    }
+  
+  }
 
 const userLogout = async (req, res) => {
 res.clearCookie("jwt");
