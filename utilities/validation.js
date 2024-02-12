@@ -115,23 +115,23 @@ validate.updateRules = () => {
 }
 
 
-validate.authCheck = async (req, res, next) => {
-    if(req.user){
-    next();
-    } else if(req.cookies.jwt) {
-        jwt.verify(
-            req.cookies.jwt,
-            process.env.ACCESS_TOKEN_SECRET,
-            function (err, user) {
-             if (err) {
-             console.log(err)
-             }
-             next()
-            })
-    } else {
-    return res.send('Sorry, you must first log in before using the system!') 
+validate.authCheck = (req, res, next) => {
+    const token = req.headers['authorization']; // Get the JWT token from the request headers
+  
+    if (!token) {
+      return res.status(401).json({ message: 'Authentication token is required' });
     }
-}
+  
+    // Verify the token
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
+      if (err) {
+        return res.status(403).json({ message: 'Invalid token' });
+      }
+      req.user = user; // Attach the user object to the request
+      next(); // Call the next middleware
+    });
+  };
+
 
 /* ****************************************
  * Middleware For Handling Errors
