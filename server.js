@@ -32,12 +32,14 @@ app.use(passport.session())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 const allowedOrigins = ["http://localhost:5173", "https://curious-druid-c20cee.netlify.app"]
-// Use CORS middleware here
-app.use(cors({
-  origin: allowedOrigins,
-  methods: "GET, POST, PUT, DELETE",
-  credentials: true,
-}));
+
+const corsOptions = {
+    origin: ['http://example1.com', 'http://example2.com'],
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true, 
+};
+app.use(cors(corsOptions));
 app.use(cookieParser())
 
 
