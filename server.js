@@ -36,7 +36,7 @@ const allowedOrigins = ["http://localhost:5173", "https://curious-druid-c20cee.n
 const corsOptions = {
     origin: ['http://example1.com', 'http://example2.com'],
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
     credentials: true, 
 };
 app.use(cors(corsOptions));
