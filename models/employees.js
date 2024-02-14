@@ -18,7 +18,7 @@ module.exports = (mongoose) => {
           type: String
         },
         birthday: {
-          type: Date
+          type: String
         },
         jobPosition: {
           type: String  
